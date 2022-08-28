@@ -5,12 +5,11 @@ import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.provisioning.JdbcUserDetailsManager;
+import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
@@ -18,8 +17,7 @@ public class SecurityConfiguration {
 
 	@Autowired
 	private DataSource dataSource;
-	
-	
+
 	/**
 	 * Realiza a configuracao da cadeia de seguranca
 	 * 
@@ -34,21 +32,22 @@ public class SecurityConfiguration {
 				.logout(logout -> logout.logoutSuccessUrl("/logout"));
 		return http.build();
 	}
-	
+
 	/**
-	 * Prove autenticacao
-	 * @param authenticationConfiguration
+	 * Faz a autenticacao
+	 * @param dataSource
 	 * @return
-	 * @throws Exception
 	 */
-	 @Bean
-     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
-         return authenticationConfiguration.getAuthenticationManager();
-     }
+	@Bean
+	public UserDetailsManager users(DataSource dataSource) {
+
+		JdbcUserDetailsManager users = new JdbcUserDetailsManager(dataSource);
+		return users;
+	}
 
 	/**
 	 * 
-	 * @return
+	 * @return {@link PasswordEncoder}
 	 */
 	@Bean
 	public PasswordEncoder passwordEncoder() {
