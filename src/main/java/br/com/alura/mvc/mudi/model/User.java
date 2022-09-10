@@ -16,7 +16,7 @@ public class User {
 	@Id
 	private String username;
 	private String password;
-	private Boolean enable;
+	private Boolean enabled;
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user", fetch = FetchType.LAZY)
 	private List<Pedido> pedidos;
 	
@@ -32,11 +32,17 @@ public class User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public Boolean getEnable() {
-		return enable;
+	public Boolean getEnabled() {
+		return enabled;
 	}
-	public void setEnable(Boolean enable) {
-		this.enable = enable;
+	public void setEnabled(Boolean enable) {
+		this.enabled = enable;
+	}
+	public List<Pedido> getPedidos() {
+		return pedidos;
+	}
+	public void setPedidos(List<Pedido> pedidos) {
+		this.pedidos = pedidos;
 	}
 	
 	
