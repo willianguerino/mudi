@@ -9,7 +9,6 @@ import org.springframework.stereotype.Repository;
 
 import br.com.alura.mvc.mudi.model.Pedido;
 import br.com.alura.mvc.mudi.model.StatusPedido;
-import br.com.alura.mvc.mudi.model.User;
 
 @Repository
 public interface PedidoRepository extends JpaRepository<Pedido, Long> {

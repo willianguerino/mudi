@@ -41,7 +41,7 @@ public class PedidoController {
 			String username = SecurityContextHolder.getContext().getAuthentication().getName();
 			
 			Pedido pedido = requisicao.toPedido();
-			User user = userRepository.findByName(username);
+			User user = userRepository.findByUsername(username);
 			pedido.setUser(user);
 			pedidoRepository.save(pedido);
 			return "redirect:/home";
