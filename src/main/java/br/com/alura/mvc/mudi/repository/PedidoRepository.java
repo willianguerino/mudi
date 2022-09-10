@@ -14,9 +14,11 @@ import br.com.alura.mvc.mudi.model.User;
 @Repository
 public interface PedidoRepository extends JpaRepository<Pedido, Long> {
 
-	List<Pedido> findByStatus(StatusPedido valueOf);
+	List<Pedido> findByStatus(StatusPedido status);
 	@Query("select p from Pedido p join p.user u where u.username = :username")
 	List<Pedido> findAllByUsuario(@Param("username") String string);
+	@Query("select p from Pedido p join p.user u where u.username = :username and p.status = :status")
+	List<Pedido> findByStatusAndUser(@Param("status") StatusPedido status,@Param("username") String username);
 
 
 }
