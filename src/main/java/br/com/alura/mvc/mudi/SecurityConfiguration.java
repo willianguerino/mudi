@@ -33,7 +33,8 @@ public class SecurityConfiguration {
 						.defaultSuccessUrl("/home", true)
 						.permitAll()
 				)
-				.logout(logout -> logout.logoutSuccessUrl("/logout"));
+				.logout(logout -> logout.logoutSuccessUrl("/logout"))
+				.csrf().disable();
 		return http.build();
 	}
 
