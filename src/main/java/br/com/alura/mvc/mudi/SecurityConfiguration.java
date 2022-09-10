@@ -41,7 +41,7 @@ public class SecurityConfiguration {
 	/**
 	 * Faz a autenticacao
 	 * @param dataSource
-	 * @return
+	 * @return {@link UserDetailsManager}
 	 */
 	@Bean
 	public UserDetailsManager users(DataSource dataSource) {
