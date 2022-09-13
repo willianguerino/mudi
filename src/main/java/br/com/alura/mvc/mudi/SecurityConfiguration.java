@@ -27,7 +27,11 @@ public class SecurityConfiguration {
 	 */
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-		http.authorizeHttpRequests((authz) -> authz.anyRequest().authenticated())
+		http.authorizeHttpRequests((authorizeRequests) -> authorizeRequests
+				.antMatchers("/home/**")
+					.permitAll()
+				.anyRequest()
+					.authenticated())
 				.formLogin(form -> form
 						.loginPage("/login")
 						.defaultSuccessUrl("/usuario/pedido", true)
