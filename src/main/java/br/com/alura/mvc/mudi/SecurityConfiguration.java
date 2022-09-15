@@ -37,7 +37,7 @@ public class SecurityConfiguration {
 						.defaultSuccessUrl("/usuario/pedido", true)
 						.permitAll()
 				)
-				.logout(logout -> logout.logoutSuccessUrl("/logout"))
+				.logout(logout -> logout.logoutSuccessUrl("/home"))
 				.csrf().disable();
 		return http.build();
 	}
