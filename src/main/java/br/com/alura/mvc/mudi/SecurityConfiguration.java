@@ -30,50 +30,32 @@ public class SecurityConfiguration {
 	 */
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-		http.authorizeHttpRequests((authorizeRequests) -> authorizeRequests
-				.antMatchers("/home/**")
-					.permitAll()
-				.anyRequest()
-					.authenticated())
-				.formLogin(form -> form
-						.loginPage("/login")
-						.defaultSuccessUrl("/usuario/pedido", true)
-						.permitAll()
-				)
-				.logout(logout -> logout.logoutSuccessUrl("/home"))
-				.csrf().disable();
+		http.authorizeHttpRequests((authorizeRequests) -> authorizeRequests.antMatchers("/home/**").permitAll()
+				.anyRequest().authenticated())
+				.formLogin(form -> form.loginPage("/login").defaultSuccessUrl("/usuario/pedido", true).permitAll())
+				.logout(logout -> logout.logoutSuccessUrl("/home")).csrf().disable();
 		return http.build();
 	}
 
 	/**
 	 * Faz a autenticacao
+	 * 
 	 * @param dataSource
 	 * @return {@link UserDetailsManager}
 	 */
 	@Bean
 	public UserDetailsManager users(DataSource dataSource) {
-		
+
 		/*
 		 * UserDetails userDetails = User .withUsername("maria")
 		 * .password(passwordEncoder().encode("willian")) .roles("ADM") .build();
 		 */
-		
 
 		JdbcUserDetailsManager users = new JdbcUserDetailsManager(dataSource);
-		//users.createUser(userDetails).;
+		// users.createUser(userDetails).;
 		return users;
 	}
 
-	//@Bean
-	/*
-	 * public UserDetailsService userDetailsService() { UserDetails userDetails =
-	 * User .withUsername("willian") .password(passwordEncoder().encode("maria"))
-	 * .roles("ADM") .build();
-	 * 
-	 * return new User;
-	 */
-		
-//	}
 	/**
 	 * 
 	 * @return {@link PasswordEncoder}
