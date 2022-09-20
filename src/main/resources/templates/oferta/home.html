@@ -5,39 +5,36 @@
 	<div class="container">
 		<div th:replace="~{base :: titulo('Ultimos Pedidos')}"></div>
 
-		<div class="container">
-			<div class="card mb-3" th:each="pedido : ${pedidos}">
+		<div class="container" id="ofertas">
+			<div class="card mb-3" v-for="pedido in pedidos">
 
-				<div class="card-header alert-dark" th:text="${pedido.nomeProduto}" />
+				<div class="card-header alert-dark">{{pedido.nomeProduto}}</div>
 
 				<div class="card-body">
 					<div class="row">
 						<div class="col-12 col-sm-8 mb-3">
 							<div class="row ">
 								<div class="col-md-5">
-									Valor: <span th:if="${pedido.valorNegociado} != null"
-										th:text="${'R$' + #numbers.formatDecimal(pedido.valorNegociado,3,'POINT',2,'COMMA')}">200,99</span>
+									Valor: <input />
 								</div>
 								<div class="col-md-6">
-									Data da entrega: <span
-										th:text="${#temporals.format(pedido.dataDaEntrega, 'dd/MMM/yyyy')}">10/02/2020</span>
+									Data da entrega:<input />
 								</div>
 							</div>
 
 							<div>Produto</div>
 							<div>
-								<input class="form-control" th:value="${pedido.urlProduto}"
-									value="url do produto" />
+								<a v-bind:href="pedido.urlProduto">{{pedido.nomeProduto	}}</a>
 							</div>
 
 							<div>Descrição</div>
 							<div>
-								<textarea class="form-control" th:text="${pedido.descricao}">descrição do pedido</textarea>
+								<textarea class="form-control">{{pedido.descricao}}</textarea>
 							</div>
 						</div>
 						<div class="col-12 col-sm-4">
 							<div>
-								<img class="img-thumbnail" th:src="${pedido.urlImagem}" src="" />
+								<img class="img-thumbnail" v-bind:src="pedido.urlImagem" src="" />
 							</div>
 						</div>
 					</div>
@@ -46,11 +43,23 @@
 		</div>
 	</div>
 	<script>
-		function onLoad(){
-			
+		function onLoad() {
+			var app = new Vue({
+						el :'#ofertas',
+						data : {
+							pedidos : []
+							},
+							mounted(){
+								axios
+									.get('http://localhost:8080/api/pedido/aguardando')
+									.then(response => (this.pedidos = response.data))
+							}
+						}
+					)
 		}
 	</script>
-	<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-	
+	<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
 </body>
 </html>
