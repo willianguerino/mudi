@@ -17,6 +17,7 @@ import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @JsonIgnoreProperties
 @Entity
@@ -38,6 +39,7 @@ public class Pedido {
 	@Enumerated(EnumType.STRING)
 	private StatusPedido status;
 	
+	@JsonManagedReference
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "pedido", fetch = FetchType.LAZY)	
 	private List<Oferta> ofertas;
 	
